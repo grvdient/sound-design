@@ -33,13 +33,13 @@
     transform: translateZ(0);
     will-change: transform;
     opacity: 0;
-    animation: fadeIn 4s ease-out forwards;
+    animation: fadeIn 2s ease-out forwards;
   }
 
   /* Общая анимация появления контента */
   section, footer {
     opacity: 0;
-    animation: fadeIn 2s ease-out forwards;
+    animation: fadeIn 1.8s ease-out forwards;
     animation-delay: 0.5s;
   }
 
@@ -68,18 +68,29 @@
     justify-content:center;
   }
 
-  /* Горизонтальные видео: займут ширину, сохранят 16:9 (не растягиваются). */
-  .video-slot video {
+  /* Первое видео (hero) — 50% высоты экрана */
+  .video1 .video-slot {
+    height: 50vh;
+  }
+  .video1 .video-slot video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    aspect-ratio: 16/9;
+  }
+
+  /* Горизонтальные видео 16:9 для остальных */
+  .video-slot:not(.video1 .video-slot) video {
     width: 100%;
     height: auto;
-    aspect-ratio: 16/9;
     max-height: 100vh;
+    aspect-ratio: 16/9;
     object-fit: cover;
     display: block;
     margin: 0 auto;
   }
 
-  /* Вертикальные видео (7–10) — остаются вертикальными */
+  /* Вертикальные видео (7–10) */
   .vertical-video video {
     width: auto;
     height: 100%;
@@ -128,6 +139,16 @@
     font-size:0.9rem;
     color:#888;
     background: rgba(0,0,0,0.5);
+  }
+
+  /* Адаптив для мобильных — hero видео тоже 50% */
+  @media (max-width: 768px) {
+    .video1 .video-slot {
+      height: 50vh;
+    }
+    .video1 .video-slot video {
+      object-fit: cover;
+    }
   }
 </style>
 </head>
