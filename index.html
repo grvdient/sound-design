@@ -11,8 +11,16 @@
     color: #f5f5f5;
     scroll-behavior: smooth;
     background: #000;
+    overflow-x: hidden;
   }
 
+  /* Анимация плавного появления */
+  @keyframes fadeIn {
+    from { opacity: 0; transform: scale(1.02); }
+    to { opacity: 1; transform: scale(1); }
+  }
+
+  /* Фоновый слой */
   .parallax-bg {
     position: fixed;
     top: 0;
@@ -22,6 +30,17 @@
     background: url('images/background.png') no-repeat center center;
     background-size: cover;
     z-index: -1;
+    transform: translateZ(0);
+    will-change: transform;
+    opacity: 0;
+    animation: fadeIn 2s ease-out forwards;
+  }
+
+  /* Общая анимация появления контента */
+  section, footer {
+    opacity: 0;
+    animation: fadeIn 1.8s ease-out forwards;
+    animation-delay: 0.5s;
   }
 
   section {
@@ -71,7 +90,7 @@
     object-fit: cover;
   }
 
-  /* Кнопки по углам */
+  /* Кнопки управления */
   .controls {
     position: absolute;
     bottom: 20px;
@@ -112,14 +131,13 @@
 </head>
 <body>
 
-<!-- Фоновый слой с параллаксом -->
-<div class="parallax-bg rellax" data-rellax-speed="-5"></div>
+<!-- Фон с мягким параллаксом и плавным появлением -->
+<div class="parallax-bg rellax" data-rellax-speed="-0.5"></div>
 
 <section class="hero">
   <h1></h1>
 </section>
 
-<!-- Видео секции 1-6 -->
 <section class="video1">
   <div class="video-slot">
     <video id="video1" src="videos/demo1.mp4" autoplay muted loop playsinline></video>
@@ -166,7 +184,6 @@
   </div>
 </section>
 
-<!-- Новые 4 вертикальных видео -->
 <section class="video7 vertical-video">
   <div class="video-slot">
     <video id="video7" src="videos/demo7.mp4" autoplay muted loop playsinline></video>
@@ -242,7 +259,7 @@ function toggleMute(id) {
 <!-- Подключение Rellax.js -->
 <script src="https://cdn.jsdelivr.net/npm/rellax@1.12.1/rellax.min.js"></script>
 <script>
-  // Инициализация параллакса
+  // Мягкий параллакс
   var rellax = new Rellax('.rellax');
 </script>
 
