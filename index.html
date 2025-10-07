@@ -63,23 +63,23 @@
     width: 100%;
     height: 100vh;
     overflow: hidden;
+    display:flex;
+    align-items:center;
+    justify-content:center;
   }
 
-  /* Первое видео 50% высоты секции */
-  .video1 .video-slot video {
-    width: 100%;
-    height: 50%;
-    object-fit: cover;
-  }
-
-  /* Все горизонтальные видео full-screen */
+  /* Горизонтальные видео: займут ширину, сохранят 16:9 (не растягиваются). */
   .video-slot video {
     width: 100%;
-    height: 100%;
+    height: auto;
+    aspect-ratio: 16/9;
+    max-height: 100vh;
     object-fit: cover;
+    display: block;
+    margin: 0 auto;
   }
 
-  /* Вертикальные видео (7–10) */
+  /* Вертикальные видео (7–10) — остаются вертикальными */
   .vertical-video video {
     width: auto;
     height: 100%;
@@ -90,7 +90,7 @@
     object-fit: cover;
   }
 
-  /* Кнопки управления */
+  /* Кнопки по углам */
   .controls {
     position: absolute;
     bottom: 20px;
@@ -99,9 +99,11 @@
     display: flex;
     justify-content: space-between;
     z-index: 1;
+    pointer-events: none; /* чтобы кнопки не мешали кликам по видео */
   }
 
   .controls button {
+    pointer-events: auto;
     padding: 10px 15px;
     font-size: 1.2rem;
     background: rgba(0,0,0,0.6);
@@ -132,7 +134,7 @@
 <body>
 
 <!-- Фон с мягким параллаксом и плавным появлением -->
-<div class="parallax-bg rellax" data-rellax-speed="-1"></div>
+<div class="parallax-bg rellax" data-rellax-speed="-0.5"></div>
 
 <section class="hero">
   <h1></h1>
