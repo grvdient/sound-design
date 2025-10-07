@@ -33,13 +33,13 @@
     transform: translateZ(0);
     will-change: transform;
     opacity: 0;
-    animation: fadeIn 2s ease-out forwards;
+    animation: fadeIn 4s ease-out forwards;
   }
 
   /* Общая анимация появления контента */
   section, footer {
     opacity: 0;
-    animation: fadeIn 1.8s ease-out forwards;
+    animation: fadeIn 2s ease-out forwards;
     animation-delay: 0.5s;
   }
 
@@ -79,8 +79,11 @@
     aspect-ratio: 16/9;
   }
 
-  /* Горизонтальные видео 16:9 для остальных */
-  .video-slot:not(.video1 .video-slot) video {
+  /* Горизонтальные видео 16:9 (2–5) */
+  .video2 video,
+  .video3 video,
+  .video4 video,
+  .video5 video {
     width: 100%;
     height: auto;
     max-height: 100vh;
@@ -91,7 +94,10 @@
   }
 
   /* Вертикальные видео (7–10) */
-  .vertical-video video {
+  .video7 video,
+  .video8 video,
+  .video9 video,
+  .video10 video {
     width: auto;
     height: 100%;
     max-height: 100vh;
@@ -110,7 +116,7 @@
     display: flex;
     justify-content: space-between;
     z-index: 1;
-    pointer-events: none; /* чтобы кнопки не мешали кликам по видео */
+    pointer-events: none;
   }
 
   .controls button {
