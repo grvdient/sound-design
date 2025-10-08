@@ -86,11 +86,11 @@
   .video5 video {
     width: 100%;
     height: auto;
-    max-height: 100vh;
     aspect-ratio: 16/9;
     object-fit: cover;
     display: block;
     margin: 0 auto;
+    border-radius: 10px;
   }
 
   /* Вертикальные видео (7–10) */
@@ -140,27 +140,56 @@
   a:hover { text-decoration: underline; }
 
   footer {
-    padding:30px 20px;
-    text-align:center;
-    font-size:0.9rem;
-    color:#888;
-    background: rgba(0,0,0,0.5);
+    text-align: center;
+    padding: 40px 20px;
+    background: rgba(0, 0, 0, 0.6);
+    color: #ccc;
+    font-size: 0.9rem;
   }
 
-  /* Адаптив для мобильных — hero видео тоже 50% */
+  footer a {
+    color: #fff;
+    text-decoration: none;
+    transition: opacity 0.3s;
+  }
+
+  footer a:hover {
+    opacity: 0.7;
+  }
+
+  /* 🔹 Адаптив для мобильных устройств */
   @media (max-width: 768px) {
+
+    /* Hero-видео остаётся 50% высоты */
     .video1 .video-slot {
       height: 50vh;
     }
     .video1 .video-slot video {
       object-fit: cover;
     }
+
+    /* Горизонтальные видео без рамок и лишних отступов */
+    .video2 video,
+    .video3 video,
+    .video4 video,
+    .video5 video {
+      width: 100vw;
+      height: auto;
+      aspect-ratio: 16/9;
+      border-radius: 0;
+    }
+
+    /* Сжимаем расстояние между видео */
+    section {
+      min-height: auto;
+      padding: 0;
+    }
   }
 </style>
 </head>
 <body>
 
-<!-- Фон с мягким параллаксом и плавным появлением -->
+<!-- Фон с мягким параллаксом -->
 <div class="parallax-bg rellax" data-rellax-speed="-0.5"></div>
 
 <section class="hero">
@@ -256,12 +285,13 @@
 <section class="contacts">
   <p>
     <a href="https://www.instagram.com/grvdienthalfblessed" target="_blank">Instagram</a> | 
-    <a href="https://t.me/grvdigrvdi" target="_blank">Telegram</a>
+    <a href="https://t.me/grvdigrvdi" target="_blank">Telegram</a> | 
+    <a href="mailto:grvdixnt@gmail.com">grvdixnt@gmail.com</a>
   </p>
 </section>
 
 <footer>
-  © 2025 GRVDIXNT
+  © 2025 GRVDIXNT — Sound Design
 </footer>
 
 <script>
@@ -289,22 +319,8 @@ function toggleMute(id) {
 <script src="https://cdn.jsdelivr.net/npm/rellax@1.12.1/rellax.min.js"></script>
 <script>
   // Мягкий параллакс
-  var rellax = new Rellax('.rellax');
+  var rellax = new Rellax('.rellax', { speed: -0.5 });
 </script>
 
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
