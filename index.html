@@ -160,7 +160,7 @@
   /* 🔹 Адаптив для мобильных устройств */
   @media (max-width: 768px) {
 
-    /* Hero-видео остаётся 50% высоты */
+    /* Hero видео остаётся 50% высоты */
     .video1 .video-slot {
       height: 50vh;
     }
@@ -168,21 +168,42 @@
       object-fit: cover;
     }
 
-    /* Горизонтальные видео без рамок и лишних отступов */
+    /* Горизонтальные видео 2–5: заполняют экран без пустот */
+    .video2 .video-slot,
+    .video3 .video-slot,
+    .video4 .video-slot,
+    .video5 .video-slot {
+      position: relative;
+      width: 100vw;
+      height: 100vh;
+      overflow: hidden;
+      background: #000;
+    }
+
     .video2 video,
     .video3 video,
     .video4 video,
     .video5 video {
+      position: absolute;
+      top: 50%;
+      left: 50%;
       width: 100vw;
       height: 100vh;
-      aspect-ratio: 16/9;
+      object-fit: cover;
+      transform: translate(-50%, -50%);
       border-radius: 0;
     }
 
-    /* Сжимаем расстояние между видео */
+    /* Секции с видео без лишних отступов */
     section {
       min-height: auto;
       padding: 0;
+    }
+
+    /* Кнопки управления видео */
+    .controls {
+      bottom: 5vh;
+      padding: 0 10px;
     }
   }
 </style>
@@ -324,4 +345,3 @@ function toggleMute(id) {
 
 </body>
 </html>
-
