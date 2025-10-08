@@ -170,29 +170,26 @@
 
   /* Горизонтальные видео 2–5: заполняют экран без пустот */
   .video2 .video-slot,
-  .video3 .video-slot,
-  .video4 .video-slot,
-  .video5 .video-slot {
-    height: auto;
-    width: 100%;
-    max-height: calc(100vw * 9 / 16); /* 16:9 по ширине экрана */
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    overflow: hidden;
-  }
+.video3 .video-slot,
+.video4 .video-slot,
+.video5 .video-slot {
+  width: 100vw;      /* растянуть на всю ширину экрана */
+  height: calc(100vw * 9 / 16); /* высота по 16:9 */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
 
-  .video2 video,
-  .video3 video,
-  .video4 video,
-  .video5 video {
-    width: 100%;       /* растянуть по ширине контейнера */
-    height: auto;      /* высота автоматически под 16:9 */
-    aspect-ratio: 16/9;
-    object-fit: contain; /* видео полностью видно, без обрезки */
-    border-radius: 0;
-  }
-
+.video2 video,
+.video3 video,
+.video4 video,
+.video5 video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* чтобы видео заполнилось полностью */
+  border-radius: 0;
+}
   /* Секции с видео без лишних отступов */
   section {
     min-height: auto;
@@ -343,6 +340,7 @@ function toggleMute(id) {
 
 </body>
 </html>
+
 
 
 
