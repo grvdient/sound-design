@@ -167,7 +167,13 @@
     .video1 .video-slot video {
       object-fit: cover;
     }
-
+{
+  .video2 video {
+    width: 100%;      /* растянуть по ширине контейнера */
+    height: auto;     /* высота автоматически по пропорциям 16:9 */
+    aspect-ratio: 16/9;
+  }
+}
     /* Горизонтальные видео 2–5: заполняют экран без пустот */
     .video2 .video-slot,
     .video3 .video-slot,
@@ -342,6 +348,7 @@ function toggleMute(id) {
 
 </body>
 </html>
+
 
 
 
