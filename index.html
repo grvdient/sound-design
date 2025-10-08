@@ -174,11 +174,12 @@
     .video4 .video-slot,
     .video5 .video-slot {
        height: auto;       /* Автоматическая высота */
-    max-height: 56.25vw; /* 16:9 пропорция относительно ширины */
-    overflow: hidden;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+       width: 100%;
+       max-height: calc(100vw * 9 / 16); /* 16:9 по ширине экрана */
+       display: flex;
+       align-items: center;
+       justify-content: center;
+       overflow: hidden;
     }
 
     .video2 video,
@@ -341,6 +342,7 @@ function toggleMute(id) {
 
 </body>
 </html>
+
 
 
 
