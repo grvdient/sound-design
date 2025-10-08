@@ -173,25 +173,22 @@
     .video3 .video-slot,
     .video4 .video-slot,
     .video5 .video-slot {
-      position: relative;
-      width: 100vw;
-      height: 100vh;
-      overflow: hidden;
-      background: #000;
+       height: auto;       /* Автоматическая высота */
+    max-height: 56.25vw; /* 16:9 пропорция относительно ширины */
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     }
 
     .video2 video,
     .video3 video,
     .video4 video,
     .video5 video {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      width: 100vw;
-      height: 100vh;
-      object-fit: cover;
-      transform: translate(-50%, -50%);
-      border-radius: 0;
+      width: 100%;
+    height: auto;       /* высота подстраивается под ширину */
+    object-fit: contain; /* видео полностью видно, без обрезки */
+    border-radius: 0;
     }
 
     /* Секции с видео без лишних отступов */
@@ -345,3 +342,4 @@ function toggleMute(id) {
 
 </body>
 </html>
+
