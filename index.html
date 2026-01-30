@@ -68,7 +68,7 @@
     justify-content:center;
   }
 
-  /* Первое видео (hero) — 50% высоты экрана */
+  /* Первое видео (hero) —  секция 100vh, видео 50% */
   .video1 .video-slot {
     height: 100vh;
   }
@@ -79,7 +79,11 @@
     aspect-ratio: 16/9;
   }
 
-  /* Горизонтальные видео 16:9 (2–5) */
+  /* Горизонтальные видео 16:9 (доп. слоты + 2–5) */
+  .video1a video,
+  .video1b video,
+  .video1c video,
+  .video1d video,
   .video2 video,
   .video3 video,
   .video4 video,
@@ -153,63 +157,71 @@
     transition: opacity 0.3s;
   }
 
-  footer a:hover {
-    opacity: 0.7;
-  }
+  footer a:hover { opacity: 0.7; }
 
   /* 🔹 Адаптив для мобильных устройств */
   @media (max-width: 768px) {
-.video1 {
-    margin-top: 70px;
-    margin-bottom: 140px;
-  }
+    .video1 {
+      margin-top: 70px;
+      margin-bottom: 140px;
+    }
 
-  .contacts {
-    padding-top: 350px;
-    padding-bottom: 70px;
-  }
-  /* Hero видео остаётся 50% высоты */
-  .video1 .video-slot {
-    height: 50vh;
-  }
-  .video1 .video-slot video {
-    object-fit: cover;
-  }
+    .contacts {
+      padding-top: 350px;
+      padding-bottom: 70px;
+    }
 
-  /* Горизонтальные видео 2–5: заполняют экран без пустот */
-  .video2 .video-slot,
-.video3 .video-slot,
-.video4 .video-slot,
-.video5 .video-slot {
-  width: 100vw;      /* растянуть на всю ширину экрана */
-  height: calc(100vw * 9 / 16); /* высота по 16:9 */
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
-}
+    /* Hero видео остаётся 50% высоты */
+    .video1 .video-slot {
+      height: 50vh;
+    }
+    .video1 .video-slot video {
+      object-fit: cover;
+    }
 
-.video2 video,
-.video3 video,
-.video4 video,
-.video5 video {
-  width: 100%;
-  height: 100%;
-  object-fit: cover; /* чтобы видео заполнилось полностью */
-  border-radius: 0;
-}
-  /* Секции с видео без лишних отступов */
-  section {
-    min-height: auto;
-    padding: 0;
-  }
+    /* Горизонтальные видео: заполняют экран без пустот */
+    .video1a .video-slot,
+    .video1b .video-slot,
+    .video1c .video-slot,
+    .video1d .video-slot,
+    .video2 .video-slot,
+    .video3 .video-slot,
+    .video4 .video-slot,
+    .video5 .video-slot {
+      width: 100vw;
+      height: calc(100vw * 9 / 16);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
 
-  /* Кнопки управления видео */
-  .controls {
-    bottom: 5vh;
-    padding: 0 10px;
+    .video1a video,
+    .video1b video,
+    .video1c video,
+    .video1d video,
+    .video2 video,
+    .video3 video,
+    .video4 video,
+    .video5 video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 0;
+    }
+
+    /* Секции с видео без лишних отступов */
+    section {
+      min-height: auto;
+      padding: 0;
+    }
+
+    /* Кнопки управления видео */
+    .controls {
+      bottom: 5vh;
+      padding: 0 10px;
+    }
   }
-}
 </style>
 </head>
 <body>
@@ -221,12 +233,55 @@
   <h1></h1>
 </section>
 
+<!-- video1: без кнопок (как ты просил) -->
 <section class="video1">
   <div class="video-slot">
     <video id="video1" src="videos/demo1.mp4" autoplay muted loop playsinline></video>
   </div>
 </section>
 
+<!-- ✅ 4 новых горизонтальных слота ПОСЛЕ video1 -->
+<section class="video1a">
+  <div class="video-slot">
+    <video id="video1a" src="videos/slot1.mp4" autoplay muted loop playsinline></video>
+    <div class="controls">
+      <button id="playBtn1a" onclick="togglePlay('video1a')">❚❚</button>
+      <button id="muteBtn1a" onclick="toggleMute('video1a')">🔇</button>
+    </div>
+  </div>
+</section>
+
+<section class="video1b">
+  <div class="video-slot">
+    <video id="video1b" src="videos/slot2.mp4" autoplay muted loop playsinline></video>
+    <div class="controls">
+      <button id="playBtn1b" onclick="togglePlay('video1b')">❚❚</button>
+      <button id="muteBtn1b" onclick="toggleMute('video1b')">🔇</button>
+    </div>
+  </div>
+</section>
+
+<section class="video1c">
+  <div class="video-slot">
+    <video id="video1c" src="videos/slot3.mp4" autoplay muted loop playsinline></video>
+    <div class="controls">
+      <button id="playBtn1c" onclick="togglePlay('video1c')">❚❚</button>
+      <button id="muteBtn1c" onclick="toggleMute('video1c')">🔇</button>
+    </div>
+  </div>
+</section>
+
+<section class="video1d">
+  <div class="video-slot">
+    <video id="video1d" src="videos/slot4.mp4" autoplay muted loop playsinline></video>
+    <div class="controls">
+      <button id="playBtn1d" onclick="togglePlay('video1d')">❚❚</button>
+      <button id="muteBtn1d" onclick="toggleMute('video1d')">🔇</button>
+    </div>
+  </div>
+</section>
+
+<!-- Дальше твои существующие секции как были -->
 <section class="video2">
   <div class="video-slot">
     <video id="video2" src="videos/demo2.mp4" autoplay muted loop playsinline></video>
@@ -309,8 +364,8 @@
 
 <section class="contacts">
   <p>
-    <a href="https://www.instagram.com/grvdienthalfblessed" target="_blank">Instagram</a> | 
-    <a href="https://t.me/grvdigrvdi" target="_blank">Telegram</a> 
+    <a href="https://www.instagram.com/grvdienthalfblessed" target="_blank">Instagram</a> |
+    <a href="https://t.me/grvdigrvdi" target="_blank">Telegram</a>
   </p>
 </section>
 
@@ -322,6 +377,8 @@
 function togglePlay(id) {
   const video = document.getElementById(id);
   const btn = document.getElementById('playBtn' + id.replace('video',''));
+  if (!video || !btn) return;
+
   if(video.paused) {
     video.play();
     btn.textContent = '❚❚';
@@ -334,9 +391,35 @@ function togglePlay(id) {
 function toggleMute(id) {
   const video = document.getElementById(id);
   const btn = document.getElementById('muteBtn' + id.replace('video',''));
+  if (!video || !btn) return;
+
   video.muted = !video.muted;
   btn.textContent = video.muted ? '🔇' : '🔈';
 }
+
+/*  Автоскрытие секций, если видео не загрузилось (файла нет / ошибка) */
+function hideSectionForVideo(videoEl) {
+  const section = videoEl.closest('section');
+  if (section) section.style.display = 'none';
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  const videos = document.querySelectorAll('video');
+
+  videos.forEach(v => {
+    // Если src пустой — скрываем сразу
+    const src = (v.getAttribute('src') || '').trim();
+    if (!src) {
+      hideSectionForVideo(v);
+      return;
+    }
+
+    // Если ошибка загрузки — скрываем
+    v.addEventListener('error', () => hideSectionForVideo(v));
+
+    // Иногда бывает, что файл есть, но не читается — тоже придёт error
+  });
+});
 </script>
 
 <!-- Подключение Rellax.js -->
@@ -348,19 +431,3 @@ function toggleMute(id) {
 
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
