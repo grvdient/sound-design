@@ -22,13 +22,17 @@
 
   /* Видеофон */
   .parallax-bg {
-    position: fixed;
-    inset: 0;
-    z-index: -2;
-    overflow: hidden;
-    opacity: 0;
-    animation: fadeIn 7s ease-out forwards;
-  }
+  position: fixed;
+  inset: 0;
+  z-index: -2;
+  overflow: hidden;
+
+  opacity: 0;                 
+  transition: opacity 5s ease-out; 
+}
+
+.parallax-bg.is-ready {
+  opacity: 1;                
 
   .parallax-bg video {
     width: 100%;
@@ -230,7 +234,17 @@
 
 <!-- Фон -->
 <div class="parallax-bg" aria-hidden="true">
-  <video id="bgVideo" autoplay muted loop playsinline webkit-playsinline preload="auto">
+  <video
+    id="bgVideo"
+    autoplay
+    muted
+    loop
+    playsinline
+    webkit-playsinline
+    preload="auto"
+    disablepictureinpicture
+    controlslist="nodownload noplaybackrate noremoteplayback"
+  >
     <source src="videos/loop_logo.mp4" type="video/mp4">
   </video>
 </div>
@@ -404,16 +418,35 @@ function hideSectionForVideo(videoEl) {
 document.addEventListener('DOMContentLoaded', () => {
   // iOS autoplay kick for background video
   const bg = document.getElementById('bgVideo');
-  if (bg) {
-    bg.muted = true;
-    bg.setAttribute('muted', '');
-    bg.setAttribute('playsinline', '');
-    bg.setAttribute('webkit-playsinline', '');
+if (bg) {
+  const bgWrap = bg.closest('.parallax-bg');
 
-    const tryPlay = () => bg.play().catch(() => {});
-    tryPlay();
-    document.addEventListener('touchstart', tryPlay, { once: true, passive: true });
-  }
+  // на всякий случай повторно фиксируем нужные атрибуты
+  bg.muted = true;
+  bg.setAttribute('muted', '');
+  bg.setAttribute('playsinline', '');
+  bg.setAttribute('webkit-playsinline', '');
+
+  const showBg = () => {
+    if (bgWrap) bgWrap.classList.add('is-ready');
+  };
+
+  // как только реально пошло воспроизведение — показываем и начинаем fade-in
+  bg.addEventListener('playing', showBg, { once: true });
+
+  // запасной вариант: кадр доступен (иногда быстрее чем playing)
+  bg.addEventListener('loadeddata', () => {
+    if (bg.currentTime > 0 || !bg.paused) showBg();
+  }, { once: true });
+
+  // пытаемся запустить сразу (без ожидания тапа)
+  const tryPlay = () => bg.play().catch(() => {});
+  tryPlay();
+
+  // лёгкий retry, если iOS “не с первого раза” подхватил autoplay
+  setTimeout(() => { if (bg.paused) tryPlay(); }, 250);
+  setTimeout(() => { if (bg.paused) tryPlay(); }, 1000);
+}
 
   // Hide only section videos if missing/broken
   const videos = document.querySelectorAll('video');
@@ -436,3 +469,4 @@ document.addEventListener('DOMContentLoaded', () => {
 
 </body>
 </html>
+
