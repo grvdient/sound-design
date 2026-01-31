@@ -21,26 +21,42 @@
   }
 
   /* Фоновый слой */
-  .parallax-bg {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: url('images/background.png') no-repeat center center;
-    background-size: cover;
-    z-index: -1;
-    transform: translateZ(0);
-    will-change: transform;
-    opacity: 0;
-    animation: fadeIn 4s ease-out forwards;
-  }
+.parallax-bg {
+  position: fixed;
+  inset: 0;
+  z-index: -2;
+  overflow: hidden;
+
+  opacity: 0;
+  animation: fadeIn 7s ease-out forwards; /* fade-in фона */
+}
+
+.parallax-bg video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transform: translateZ(0);
+  will-change: transform;
+}
+
+/* Фоллбек-картинка, если видео не загрузилось */
+.parallax-bg::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: url('images/background.png') no-repeat center center;
+  background-size: cover;
+  z-index: -1;
+  opacity: 0.35; /* можно 0 если не нужен фоллбек поверх */
+  pointer-events: none;
+}
 
   /* Общая анимация появления контента */
   section, footer {
     opacity: 0;
-    animation: fadeIn 2s ease-out forwards;
-    animation-delay: 0.5s;
+    animation: fadeIn 4s ease-out forwards;
+    animation-delay: 0.8s;
   }
 
   section {
@@ -232,8 +248,12 @@
 </head>
 <body>
 
-<!-- Фон с мягким параллаксом -->
-<div class="parallax-bg rellax" data-rellax-speed="-0.5"></div>
+<!-- Фон -->
+<div class="parallax-bg">
+  <video autoplay muted loop playsinline preload="auto">
+    <source src="videos/loop_logo.mp4" type="video/mp4">
+  </video>
+</div>
 
 <section class="hero">
   <h1></h1>
@@ -437,5 +457,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
 </body>
 </html>
+
 
 
