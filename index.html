@@ -38,10 +38,7 @@
     transform: translateZ(0);
     will-change: transform;
   }
- 
-#bgVideo { opacity: 0; }
-.parallax-bg.is-ready #bgVideo { opacity: 1; }
- 
+
   /* фон-видео не должно ловить клики/показывать controls */
   .parallax-bg,
   .parallax-bg video {
@@ -408,9 +405,14 @@ document.addEventListener('DOMContentLoaded', () => {
   // iOS autoplay kick for background video
   const bg = document.getElementById('bgVideo');
   if (bg) {
-    const wrap = bg.closest('.parallax-bg');
-  const show = () => wrap && wrap.classList.add('is-ready');
-  bg.addEventListener('playing', show, { once: true });
+    bg.muted = true;
+    bg.setAttribute('muted', '');
+    bg.setAttribute('playsinline', '');
+    bg.setAttribute('webkit-playsinline', '');
+
+    const tryPlay = () => bg.play().catch(() => {});
+    tryPlay();
+    document.addEventListener('touchstart', tryPlay, { once: true, passive: true });
   }
 
   // Hide only section videos if missing/broken
@@ -434,4 +436,3 @@ document.addEventListener('DOMContentLoaded', () => {
 
 </body>
 </html>
-
