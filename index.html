@@ -20,37 +20,46 @@
     to { opacity: 1; transform: scale(1); }
   }
 
-  /* Фоновый слой */
-.parallax-bg {
-  position: fixed;
-  inset: 0;
-  z-index: -2;
-  overflow: hidden;
+  /* Видеофон */
+  .parallax-bg {
+    position: fixed;
+    inset: 0;
+    z-index: -2;
+    overflow: hidden;
+    opacity: 0;
+    animation: fadeIn 7s ease-out forwards;
+  }
 
-  opacity: 0;
-  animation: fadeIn 7s ease-out forwards; /* fade-in фона */
-}
+  .parallax-bg video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transform: translateZ(0);
+    will-change: transform;
+  }
 
-.parallax-bg video {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-  transform: translateZ(0);
-  will-change: transform;
-}
+  /* фон-видео не должно ловить клики/показывать controls */
+  .parallax-bg,
+  .parallax-bg video {
+    pointer-events: none;
+  }
 
-/* Фоллбек-картинка, если видео не загрузилось */
-.parallax-bg::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: url('images/background.png') no-repeat center center;
-  background-size: cover;
-  z-index: -1;
-  opacity: 0.35; /* можно 0 если не нужен фоллбек поверх */
-  pointer-events: none;
-}
+  .parallax-bg video::-webkit-media-controls {
+    display: none !important;
+  }
+
+  /* Фоллбек-картинка, если видео не загрузилось */
+  .parallax-bg::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: url('images/background.png') no-repeat center center;
+    background-size: cover;
+    z-index: -1;
+    opacity: 0.35; /* поставь 0 если не нужен */
+    pointer-events: none;
+  }
 
   /* Общая анимация появления контента */
   section, footer {
@@ -71,12 +80,13 @@
     overflow:hidden;
     background: rgba(0,0,0,0.5);
   }
- .hero {
-  min-height: auto;
-  height: clamp(80px, 10vh, 160px);
-  padding: 0;
-  background: transparent;
-}
+
+  .hero {
+    min-height: auto;
+    height: clamp(80px, 10vh, 160px);
+    padding: 0;
+    background: transparent;
+  }
 
   h1 { font-size:5rem; letter-spacing:50px; margin-top:0; }
 
@@ -90,10 +100,8 @@
     justify-content:center;
   }
 
-  /* Первое видео (hero) —  секция 100vh, видео 50% */
-  .video1 .video-slot {
-    height: 100vh;
-  }
+  /* Первое видео (hero) */
+  .video1 .video-slot { height: 100vh; }
   .video1 .video-slot video {
     width: 100%;
     height: 50%;
@@ -101,7 +109,7 @@
     aspect-ratio: 16/9;
   }
 
-  /* Горизонтальные видео 16:9 (доп. слоты + 2–5) */
+  /* Горизонтальные видео 16:9 */
   .video1a video,
   .video1b video,
   .video1c video,
@@ -119,7 +127,7 @@
     border-radius: 0px;
   }
 
-  /* Вертикальные видео (7–10) */
+  /* Вертикальные видео */
   .video7 video,
   .video8 video,
   .video9 video,
@@ -133,7 +141,7 @@
     object-fit: cover;
   }
 
-  /* Кнопки по углам */
+  /* Кнопки */
   .controls {
     position: absolute;
     bottom: 20px;
@@ -157,9 +165,7 @@
     transition: background 0.3s;
   }
 
-  .controls button:hover {
-    background: rgba(176,46,46,0.8);
-  }
+  .controls button:hover { background: rgba(176,46,46,0.8); }
 
   .contacts p { font-size:1.3rem; margin:15px 0; }
   a { color: #FFF5EE; text-decoration:none; }
@@ -173,35 +179,17 @@
     font-size: 0.9rem;
   }
 
-  footer a {
-    color: #fff;
-    text-decoration: none;
-    transition: opacity 0.3s;
-  }
-
+  footer a { color: #fff; text-decoration: none; transition: opacity 0.3s; }
   footer a:hover { opacity: 0.7; }
 
-  /* 🔹 Адаптив для мобильных устройств */
+  /* Мобилка */
   @media (max-width: 768px) {
-    .video1 {
-      margin-top: 70px;
-      margin-bottom: 140px;
-    }
+    .video1 { margin-top: 70px; margin-bottom: 140px; }
+    .contacts { padding-top: 350px; padding-bottom: 70px; }
 
-    .contacts {
-      padding-top: 350px;
-      padding-bottom: 70px;
-    }
+    .video1 .video-slot { height: 50vh; }
+    .video1 .video-slot video { object-fit: cover; }
 
-    /* Hero видео остаётся 50% высоты */
-    .video1 .video-slot {
-      height: 50vh;
-    }
-    .video1 .video-slot video {
-      object-fit: cover;
-    }
-
-    /* Горизонтальные видео: заполняют экран без пустот */
     .video1a .video-slot,
     .video1b .video-slot,
     .video1c .video-slot,
@@ -232,41 +220,29 @@
       border-radius: 0;
     }
 
-    /* Секции с видео без лишних отступов */
-    section {
-      min-height: auto;
-      padding: 0;
-    }
+    section { min-height: auto; padding: 0; }
 
-    /* Кнопки управления видео */
-    .controls {
-      bottom: 5vh;
-      padding: 0 10px;
-    }
+    .controls { bottom: 5vh; padding: 0 10px; }
   }
 </style>
 </head>
 <body>
 
 <!-- Фон -->
-<div class="parallax-bg">
-  <video autoplay muted loop playsinline preload="auto">
+<div class="parallax-bg" aria-hidden="true">
+  <video id="bgVideo" autoplay muted loop playsinline webkit-playsinline preload="auto">
     <source src="videos/loop_logo.mp4" type="video/mp4">
   </video>
 </div>
 
-<section class="hero">
-  <h1></h1>
-</section>
+<section class="hero"><h1></h1></section>
 
-<!-- video1: без кнопок (как ты просил) -->
 <section class="video1">
   <div class="video-slot">
     <video id="video1" src="videos/demo1.mp4" autoplay muted loop playsinline></video>
   </div>
 </section>
 
-<!-- ✅ 4 новых горизонтальных слота ПОСЛЕ video1 -->
 <section class="video1a">
   <div class="video-slot">
     <video id="video1a" src="videos/slot1.mp4" autoplay muted loop playsinline></video>
@@ -307,7 +283,6 @@
   </div>
 </section>
 
-<!-- Дальше твои существующие секции как были -->
 <section class="video2">
   <div class="video-slot">
     <video id="video2" src="videos/demo2.mp4" autoplay muted loop playsinline></video>
@@ -395,9 +370,7 @@
   </p>
 </section>
 
-<footer>
-  © 2026 GRVDIENT
-</footer>
+<footer>© 2026 GRVDIENT</footer>
 
 <script>
 function togglePlay(id) {
@@ -405,7 +378,7 @@ function togglePlay(id) {
   const btn = document.getElementById('playBtn' + id.replace('video',''));
   if (!video || !btn) return;
 
-  if(video.paused) {
+  if (video.paused) {
     video.play();
     btn.textContent = '❚❚';
   } else {
@@ -423,40 +396,43 @@ function toggleMute(id) {
   btn.textContent = video.muted ? '🔇' : '🔈';
 }
 
-/*  Автоскрытие секций, если видео не загрузилось (файла нет / ошибка) */
 function hideSectionForVideo(videoEl) {
   const section = videoEl.closest('section');
   if (section) section.style.display = 'none';
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-  const videos = document.querySelectorAll('video');
+  // iOS autoplay kick for background video
+  const bg = document.getElementById('bgVideo');
+  if (bg) {
+    bg.muted = true;
+    bg.setAttribute('muted', '');
+    bg.setAttribute('playsinline', '');
+    bg.setAttribute('webkit-playsinline', '');
 
+    const tryPlay = () => bg.play().catch(() => {});
+    tryPlay();
+    document.addEventListener('touchstart', tryPlay, { once: true, passive: true });
+  }
+
+  // Hide only section videos if missing/broken
+  const videos = document.querySelectorAll('video');
   videos.forEach(v => {
-    // Если src пустой — скрываем сразу
-    const src = (v.getAttribute('src') || '').trim();
-    if (!src) {
+    if (v.id === 'bgVideo') return;
+
+    const src =
+      (v.getAttribute('src') || '') ||
+      (v.querySelector('source')?.getAttribute('src') || '');
+
+    if (!src.trim()) {
       hideSectionForVideo(v);
       return;
     }
 
-    // Если ошибка загрузки — скрываем
     v.addEventListener('error', () => hideSectionForVideo(v));
-
-    // Иногда бывает, что файл есть, но не читается — тоже придёт error
   });
 });
 </script>
 
-<!-- Подключение Rellax.js -->
-<script src="https://cdn.jsdelivr.net/npm/rellax@1.12.1/rellax.min.js"></script>
-<script>
-  // Мягкий параллакс
-  var rellax = new Rellax('.rellax', { speed: -0.5 });
-</script>
-
 </body>
 </html>
-
-
-
