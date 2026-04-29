@@ -4,436 +4,496 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>GRVDIXNT — Sound Design</title>
+
 <link rel="icon" type="image/png" sizes="32x32" href="images/favicon.png">
 <link rel="icon" type="image/png" sizes="192x192" href="images/favicon.png">
 <link rel="apple-touch-icon" href="images/favicon.png">
+
 <style>
-  * { margin:0; padding:0; box-sizing:border-box; }
-  body {
-    font-family: 'Segoe UI', Arial, sans-serif;
-    color: #f5f5f5;
-    scroll-behavior: smooth;
-    background: #000;
-    overflow-x: hidden;
-  }
+*{margin:0;padding:0;box-sizing:border-box;}
 
-  /* Анимация плавного появления */
-  @keyframes fadeIn {
-    from { opacity: 0; transform: scale(1.02); }
-    to { opacity: 1; transform: scale(1); }
-  }
+body{
+  font-family:'Segoe UI',Arial,sans-serif;
+  color:#f5f5f5;
+  background:#000;
+  overflow-x:hidden;
+  scroll-behavior:smooth;
+}
 
-  /* Видеофон */
-  .parallax-bg {
-    position: fixed;
-    inset: 0;
-    z-index: -2;
-    overflow: hidden;
-    opacity: 0;
-    animation: fadeIn 7s ease-out forwards;
-  }
+@keyframes fadeIn{
+  from{opacity:0;transform:scale(1.02);}
+  to{opacity:1;transform:scale(1);}
+}
 
-  .parallax-bg video {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-    transform: translateZ(0);
-    will-change: transform;
-  }
+/* background */
+.parallax-bg{
+  position:fixed;
+  inset:0;
+  z-index:-2;
+  overflow:hidden;
+  opacity:0;
+  animation:fadeIn 7s ease-out forwards;
+}
 
-  /* фон-видео не должно ловить клики/показывать controls */
-  .parallax-bg,
-  .parallax-bg video {
-    pointer-events: none;
-  }
+.parallax-bg video{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  display:block;
+  transform:translateZ(0);
+  will-change:transform;
+}
 
-  .parallax-bg video::-webkit-media-controls {
-    display: none !important;
-  }
+.parallax-bg,
+.parallax-bg video{
+  pointer-events:none;
+}
 
-  /* Фоллбек-картинка, если видео не загрузилось */
-  .parallax-bg::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background: url('images/background.png') no-repeat center center;
-    background-size: cover;
-    z-index: -1;
-    opacity: 0.35; /* поставь 0 если не нужен */
-    pointer-events: none;
-  }
+.parallax-bg video::-webkit-media-controls{
+  display:none!important;
+}
 
-  /* Общая анимация появления контента */
-  section, footer {
-    opacity: 0;
-    animation: fadeIn 4s ease-out forwards;
-    animation-delay: 0.8s;
-  }
+.parallax-bg::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:url('images/background.png') no-repeat center center;
+  background-size:cover;
+  opacity:.35;
+  z-index:-1;
+}
 
-  section {
-    display:flex;
-    flex-direction:column;
-    justify-content:center;
-    align-items:center;
-    min-height:100vh;
-    width:100%;
-    text-align:center;
-    position:relative;
-    overflow:hidden;
-    background: rgba(0,0,0,0.5);
-  }
+/* sections */
+section,
+footer{
+  opacity:0;
+  animation:fadeIn 4s ease-out forwards;
+  animation-delay:.8s;
+}
 
-  .hero {
-    min-height: auto;
-    height: clamp(80px, 10vh, 160px);
-    padding: 0;
-    background: transparent;
-  }
+section{
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  min-height:100vh;
+  width:100%;
+  text-align:center;
+  position:relative;
+  overflow:hidden;
+  background:rgba(0,0,0,.5);
+}
 
-  h1 { font-size:5rem; letter-spacing:50px; margin-top:0; }
+.hero{
+  min-height:auto;
+  height:clamp(80px,10vh,160px);
+  padding:0;
+  background:transparent;
+}
 
-  .video-slot {
-    position: relative;
-    width: 100%;
-    height: 100vh;
-    overflow: hidden;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-  }
+h1{
+  font-size:5rem;
+  letter-spacing:50px;
+}
 
-  /* Первое видео (hero) */
-  .video1 .video-slot { height: 100vh; }
-  .video1 .video-slot video {
-    width: 100%;
-    height: 50%;
-    object-fit: cover;
-    aspect-ratio: 16/9;
-  }
+.video-slot{
+  position:relative;
+  width:100%;
+  height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  overflow:hidden;
+}
 
-  /* Горизонтальные видео 16:9 */
-  .video1a video,
-  .video1b video,
-  .video1c video,
-  .video1d video,
-  .video2 video,
-  .video3 video,
-  .video4 video,
-  .video5 video {
-    width: 100%;
-    height: 100vh;
-    aspect-ratio: 16/9;
-    object-fit: cover;
-    display: block;
-    margin: 0 auto;
-    border-radius: 0px;
-  }
+/* hero */
+.video1 .video-slot{
+  height:100vh;
+}
 
-  /* Вертикальные видео */
-  .video7 video,
-  .video8 video,
-  .video9 video,
-  .video10 video {
-    width: auto;
-    height: 100%;
-    max-height: 100vh;
-    aspect-ratio: 9/16;
-    margin: 0 auto;
-    border-radius: 15px;
-    object-fit: cover;
-  }
+.video1 .video-slot video{
+  width:100%;
+  height:50%;
+  object-fit:cover;
+  aspect-ratio:16/9;
+}
 
-  /* Кнопки */
-  .controls {
-    position: absolute;
-    bottom: 20px;
-    width: 100%;
-    padding: 0 20px;
-    display: flex;
-    justify-content: space-between;
-    z-index: 1;
-    pointer-events: none;
-  }
+/* horizontal */
+.video1a video,
+.video1b video,
+.video1c video,
+.video1d video,
+.video2 video,
+.video3 video,
+.video4 video,
+.video5 video{
+  width:100%;
+  height:100vh;
+  aspect-ratio:16/9;
+  object-fit:cover;
+  display:block;
+}
 
-  .controls button {
-    pointer-events: auto;
-    padding: 10px 15px;
-    font-size: 1.2rem;
-    background: rgba(0,0,0,0.6);
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background 0.3s;
-  }
+/* vertical */
+.video6a video,
+.video6b video,
+.video6c video,
+.video6d video,
+.video7 video,
+.video8 video,
+.video9 video,
+.video10 video{
+  width:auto;
+  height:100%;
+  max-height:100vh;
+  aspect-ratio:9/16;
+  object-fit:cover;
+  border-radius:15px;
+}
 
-  .controls button:hover { background: rgba(176,46,46,0.8); }
+/* controls */
+.controls{
+  position:absolute;
+  bottom:20px;
+  width:100%;
+  padding:0 20px;
+  display:flex;
+  justify-content:space-between;
+  pointer-events:none;
+  z-index:2;
+}
 
-  .contacts p { font-size:1.3rem; margin:15px 0; }
-  a { color: #FFF5EE; text-decoration:none; }
-  a:hover { text-decoration: underline; }
+.controls button{
+  pointer-events:auto;
+  padding:10px 15px;
+  font-size:1.2rem;
+  background:rgba(0,0,0,.6);
+  color:#fff;
+  border:none;
+  border-radius:5px;
+  cursor:pointer;
+  transition:.3s;
+}
 
-  footer {
-    text-align: center;
-    padding: 40px 20px;
-    background: rgba(0, 0, 0, 0.6);
-    color: #ccc;
-    font-size: 0.9rem;
-  }
+.controls button:hover{
+  background:rgba(176,46,46,.8);
+}
 
-  footer a { color: #fff; text-decoration: none; transition: opacity 0.3s; }
-  footer a:hover { opacity: 0.7; }
+.contacts p{
+  font-size:1.3rem;
+  margin:15px 0;
+}
 
-  /* Мобилка */
-  @media (max-width: 768px) {
-    .video1 { margin-top: 70px; margin-bottom: 140px; }
-    .contacts { padding-top: 350px; padding-bottom: 70px; }
+a{
+  color:#FFF5EE;
+  text-decoration:none;
+}
 
-    .video1 .video-slot { height: 50vh; }
-    .video1 .video-slot video { object-fit: cover; }
+a:hover{
+  text-decoration:underline;
+}
 
-    .video1a .video-slot,
-    .video1b .video-slot,
-    .video1c .video-slot,
-    .video1d .video-slot,
-    .video2 .video-slot,
-    .video3 .video-slot,
-    .video4 .video-slot,
-    .video5 .video-slot {
-      width: 100vw;
-      height: calc(100vw * 9 / 16);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      overflow: hidden;
-    }
+footer{
+  text-align:center;
+  padding:40px 20px;
+  background:rgba(0,0,0,.6);
+  color:#ccc;
+  font-size:.9rem;
+}
 
-    .video1a video,
-    .video1b video,
-    .video1c video,
-    .video1d video,
-    .video2 video,
-    .video3 video,
-    .video4 video,
-    .video5 video {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      border-radius: 0;
-    }
+/* mobile */
+@media (max-width:768px){
 
-    section { min-height: auto; padding: 0; }
+.video1{
+  margin-top:70px;
+  margin-bottom:140px;
+}
 
-    .controls { bottom: 5vh; padding: 0 10px; }
-  }
+.contacts{
+  padding-top:350px;
+  padding-bottom:70px;
+}
+
+.video1 .video-slot{
+  height:50vh;
+}
+
+.video1a .video-slot,
+.video1b .video-slot,
+.video1c .video-slot,
+.video1d .video-slot,
+.video2 .video-slot,
+.video3 .video-slot,
+.video4 .video-slot,
+.video5 .video-slot{
+  width:100vw;
+  height:calc(100vw * 9 / 16);
+}
+
+.video1a video,
+.video1b video,
+.video1c video,
+.video1d video,
+.video2 video,
+.video3 video,
+.video4 video,
+.video5 video{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+
+section{
+  min-height:auto;
+  padding:0;
+}
+
+.controls{
+  bottom:5vh;
+  padding:0 10px;
+}
+
+}
 </style>
 </head>
+
 <body>
 
-<!-- Фон -->
-<div class="parallax-bg" aria-hidden="true">
-  <video id="bgVideo" autoplay muted loop playsinline webkit-playsinline preload="auto">
+<!-- BG -->
+<div class="parallax-bg">
+  <video id="bgVideo" autoplay muted loop playsinline preload="auto">
     <source src="videos/loop_logo.mp4" type="video/mp4">
   </video>
 </div>
 
 <section class="hero"><h1></h1></section>
 
+<!-- HERO VIDEO -->
 <section class="video1">
   <div class="video-slot">
     <video id="video1" src="videos/demo1.mp4" autoplay muted loop playsinline></video>
   </div>
 </section>
 
+<!-- HORIZONTAL -->
 <section class="video1a">
-  <div class="video-slot">
-    <video id="video1a" src="videos/slot1.mp4" autoplay muted loop playsinline></video>
-    <div class="controls">
-      <button id="playBtn1a" onclick="togglePlay('video1a')">❚❚</button>
-      <button id="muteBtn1a" onclick="toggleMute('video1a')">🔇</button>
-    </div>
-  </div>
+<div class="video-slot">
+<video id="video1a" src="videos/slot1.mp4" autoplay muted loop playsinline></video>
+<div class="controls">
+<button id="playBtn1a" onclick="togglePlay('video1a')">❚❚</button>
+<button id="muteBtn1a" onclick="toggleMute('video1a')">🔇</button>
+</div>
+</div>
 </section>
 
 <section class="video1b">
-  <div class="video-slot">
-    <video id="video1b" src="videos/slot2.mp4" autoplay muted loop playsinline></video>
-    <div class="controls">
-      <button id="playBtn1b" onclick="togglePlay('video1b')">❚❚</button>
-      <button id="muteBtn1b" onclick="toggleMute('video1b')">🔇</button>
-    </div>
-  </div>
+<div class="video-slot">
+<video id="video1b" src="videos/slot2.mp4" autoplay muted loop playsinline></video>
+<div class="controls">
+<button id="playBtn1b" onclick="togglePlay('video1b')">❚❚</button>
+<button id="muteBtn1b" onclick="toggleMute('video1b')">🔇</button>
+</div>
+</div>
 </section>
 
 <section class="video1c">
-  <div class="video-slot">
-    <video id="video1c" src="videos/slot3.mp4" autoplay muted loop playsinline></video>
-    <div class="controls">
-      <button id="playBtn1c" onclick="togglePlay('video1c')">❚❚</button>
-      <button id="muteBtn1c" onclick="toggleMute('video1c')">🔇</button>
-    </div>
-  </div>
+<div class="video-slot">
+<video id="video1c" src="videos/slot3.mp4" autoplay muted loop playsinline></video>
+<div class="controls">
+<button id="playBtn1c" onclick="togglePlay('video1c')">❚❚</button>
+<button id="muteBtn1c" onclick="toggleMute('video1c')">🔇</button>
+</div>
+</div>
 </section>
 
 <section class="video1d">
-  <div class="video-slot">
-    <video id="video1d" src="videos/slot4.mp4" autoplay muted loop playsinline></video>
-    <div class="controls">
-      <button id="playBtn1d" onclick="togglePlay('video1d')">❚❚</button>
-      <button id="muteBtn1d" onclick="toggleMute('video1d')">🔇</button>
-    </div>
-  </div>
+<div class="video-slot">
+<video id="video1d" src="videos/slot4.mp4" autoplay muted loop playsinline></video>
+<div class="controls">
+<button id="playBtn1d" onclick="togglePlay('video1d')">❚❚</button>
+<button id="muteBtn1d" onclick="toggleMute('video1d')">🔇</button>
+</div>
+</div>
 </section>
 
 <section class="video2">
-  <div class="video-slot">
-    <video id="video2" src="videos/demo2.mp4" autoplay muted loop playsinline></video>
-    <div class="controls">
-      <button id="playBtn2" onclick="togglePlay('video2')">❚❚</button>
-      <button id="muteBtn2" onclick="toggleMute('video2')">🔇</button>
-    </div>
-  </div>
+<div class="video-slot">
+<video id="video2" src="videos/demo2.mp4" autoplay muted loop playsinline></video>
+<div class="controls">
+<button id="playBtn2" onclick="togglePlay('video2')">❚❚</button>
+<button id="muteBtn2" onclick="toggleMute('video2')">🔇</button>
+</div>
+</div>
 </section>
 
 <section class="video3">
-  <div class="video-slot">
-    <video id="video3" src="videos/demo3.mp4" autoplay muted loop playsinline></video>
-    <div class="controls">
-      <button id="playBtn3" onclick="togglePlay('video3')">❚❚</button>
-      <button id="muteBtn3" onclick="toggleMute('video3')">🔇</button>
-    </div>
-  </div>
+<div class="video-slot">
+<video id="video3" src="videos/demo3.mp4" autoplay muted loop playsinline></video>
+<div class="controls">
+<button id="playBtn3" onclick="togglePlay('video3')">❚❚</button>
+<button id="muteBtn3" onclick="toggleMute('video3')">🔇</button>
+</div>
+</div>
 </section>
 
 <section class="video4">
-  <div class="video-slot">
-    <video id="video4" src="videos/demo4.mp4" autoplay muted loop playsinline></video>
-    <div class="controls">
-      <button id="playBtn4" onclick="togglePlay('video4')">❚❚</button>
-      <button id="muteBtn4" onclick="toggleMute('video4')">🔇</button>
-    </div>
-  </div>
+<div class="video-slot">
+<video id="video4" src="videos/demo4.mp4" autoplay muted loop playsinline></video>
+<div class="controls">
+<button id="playBtn4" onclick="togglePlay('video4')">❚❚</button>
+<button id="muteBtn4" onclick="toggleMute('video4')">🔇</button>
+</div>
+</div>
 </section>
 
 <section class="video5">
-  <div class="video-slot">
-    <video id="video5" src="videos/demo5.mp4" autoplay muted loop playsinline></video>
-    <div class="controls">
-      <button id="playBtn5" onclick="togglePlay('video5')">❚❚</button>
-      <button id="muteBtn5" onclick="toggleMute('video5')">🔇</button>
-    </div>
-  </div>
+<div class="video-slot">
+<video id="video5" src="videos/demo5.mp4" autoplay muted loop playsinline></video>
+<div class="controls">
+<button id="playBtn5" onclick="togglePlay('video5')">❚❚</button>
+<button id="muteBtn5" onclick="toggleMute('video5')">🔇</button>
+</div>
+</div>
 </section>
 
+<!-- NEW VERTICAL SLOTS -->
+<section class="video6a vertical-video">
+<div class="video-slot">
+<video id="video6a" src="videos/demo6a.mp4" autoplay muted loop playsinline></video>
+<div class="controls">
+<button id="playBtn6a" onclick="togglePlay('video6a')">❚❚</button>
+<button id="muteBtn6a" onclick="toggleMute('video6a')">🔇</button>
+</div>
+</div>
+</section>
+
+<section class="video6b vertical-video">
+<div class="video-slot">
+<video id="video6b" src="videos/demo6b.mp4" autoplay muted loop playsinline></video>
+<div class="controls">
+<button id="playBtn6b" onclick="togglePlay('video6b')">❚❚</button>
+<button id="muteBtn6b" onclick="toggleMute('video6b')">🔇</button>
+</div>
+</div>
+</section>
+
+<section class="video6c vertical-video">
+<div class="video-slot">
+<video id="video6c" src="videos/demo6c.mp4" autoplay muted loop playsinline></video>
+<div class="controls">
+<button id="playBtn6c" onclick="togglePlay('video6c')">❚❚</button>
+<button id="muteBtn6c" onclick="toggleMute('video6c')">🔇</button>
+</div>
+</div>
+</section>
+
+<section class="video6d vertical-video">
+<div class="video-slot">
+<video id="video6d" src="videos/demo6d.mp4" autoplay muted loop playsinline></video>
+<div class="controls">
+<button id="playBtn6d" onclick="togglePlay('video6d')">❚❚</button>
+<button id="muteBtn6d" onclick="toggleMute('video6d')">🔇</button>
+</div>
+</div>
+</section>
+
+<!-- EXISTING VERTICAL -->
 <section class="video7 vertical-video">
-  <div class="video-slot">
-    <video id="video7" src="videos/demo7.mp4" autoplay muted loop playsinline></video>
-    <div class="controls">
-      <button id="playBtn7" onclick="togglePlay('video7')">❚❚</button>
-      <button id="muteBtn7" onclick="toggleMute('video7')">🔇</button>
-    </div>
-  </div>
+<div class="video-slot">
+<video id="video7" src="videos/demo7.mp4" autoplay muted loop playsinline></video>
+<div class="controls">
+<button id="playBtn7" onclick="togglePlay('video7')">❚❚</button>
+<button id="muteBtn7" onclick="toggleMute('video7')">🔇</button>
+</div>
+</div>
 </section>
 
 <section class="video8 vertical-video">
-  <div class="video-slot">
-    <video id="video8" src="videos/demo8.mp4" autoplay muted loop playsinline></video>
-    <div class="controls">
-      <button id="playBtn8" onclick="togglePlay('video8')">❚❚</button>
-      <button id="muteBtn8" onclick="toggleMute('video8')">🔇</button>
-    </div>
-  </div>
+<div class="video-slot">
+<video id="video8" src="videos/demo8.mp4" autoplay muted loop playsinline></video>
+<div class="controls">
+<button id="playBtn8" onclick="togglePlay('video8')">❚❚</button>
+<button id="muteBtn8" onclick="toggleMute('video8')">🔇</button>
+</div>
+</div>
 </section>
 
 <section class="video9 vertical-video">
-  <div class="video-slot">
-    <video id="video9" src="videos/demo9.mp4" autoplay muted loop playsinline></video>
-    <div class="controls">
-      <button id="playBtn9" onclick="togglePlay('video9')">❚❚</button>
-      <button id="muteBtn9" onclick="toggleMute('video9')">🔇</button>
-    </div>
-  </div>
+<div class="video-slot">
+<video id="video9" src="videos/demo9.mp4" autoplay muted loop playsinline></video>
+<div class="controls">
+<button id="playBtn9" onclick="togglePlay('video9')">❚❚</button>
+<button id="muteBtn9" onclick="toggleMute('video9')">🔇</button>
+</div>
+</div>
 </section>
 
 <section class="video10 vertical-video">
-  <div class="video-slot">
-    <video id="video10" src="videos/demo10.mp4" autoplay muted loop playsinline></video>
-    <div class="controls">
-      <button id="playBtn10" onclick="togglePlay('video10')">❚❚</button>
-      <button id="muteBtn10" onclick="toggleMute('video10')">🔇</button>
-    </div>
-  </div>
+<div class="video-slot">
+<video id="video10" src="videos/demo10.mp4" autoplay muted loop playsinline></video>
+<div class="controls">
+<button id="playBtn10" onclick="togglePlay('video10')">❚❚</button>
+<button id="muteBtn10" onclick="toggleMute('video10')">🔇</button>
+</div>
+</div>
 </section>
 
+<!-- CONTACTS -->
 <section class="contacts">
-  <p>
-    <a href="https://www.instagram.com/grvdienthalfblessed" target="_blank">Instagram</a> |
-    <a href="https://t.me/grvdigrvdi" target="_blank">Telegram</a>
-  </p>
+<p>
+<a href="https://www.instagram.com/grvdienthalfblessed" target="_blank">Instagram</a> |
+<a href="https://t.me/grvdigrvdi" target="_blank">Telegram</a>
+</p>
 </section>
 
 <footer>© 2026 GRVDIENT</footer>
 
 <script>
-function togglePlay(id) {
-  const video = document.getElementById(id);
-  const btn = document.getElementById('playBtn' + id.replace('video',''));
-  if (!video || !btn) return;
-
-  if (video.paused) {
+function togglePlay(id){
+  const video=document.getElementById(id);
+  const btn=document.getElementById('playBtn'+id.replace('video',''));
+  if(video.paused){
     video.play();
-    btn.textContent = '❚❚';
-  } else {
+    btn.textContent='❚❚';
+  }else{
     video.pause();
-    btn.textContent = '►';
+    btn.textContent='►';
   }
 }
 
-function toggleMute(id) {
-  const video = document.getElementById(id);
-  const btn = document.getElementById('muteBtn' + id.replace('video',''));
-  if (!video || !btn) return;
-
-  video.muted = !video.muted;
-  btn.textContent = video.muted ? '🔇' : '🔈';
+function toggleMute(id){
+  const video=document.getElementById(id);
+  const btn=document.getElementById('muteBtn'+id.replace('video',''));
+  video.muted=!video.muted;
+  btn.textContent=video.muted?'🔇':'🔈';
 }
 
-function hideSectionForVideo(videoEl) {
-  const section = videoEl.closest('section');
-  if (section) section.style.display = 'none';
+function hideSectionForVideo(videoEl){
+  const section=videoEl.closest('section');
+  if(section) section.style.display='none';
 }
 
-document.addEventListener('DOMContentLoaded', () => {
-  // iOS autoplay kick for background video
-  const bg = document.getElementById('bgVideo');
-  if (bg) {
-    bg.muted = true;
-    bg.setAttribute('muted', '');
-    bg.setAttribute('playsinline', '');
-    bg.setAttribute('webkit-playsinline', '');
+document.addEventListener('DOMContentLoaded',()=>{
 
-    const tryPlay = () => bg.play().catch(() => {});
-    tryPlay();
-    document.addEventListener('touchstart', tryPlay, { once: true, passive: true });
+const bg=document.getElementById('bgVideo');
+if(bg){
+  bg.play().catch(()=>{});
+}
+
+const videos=document.querySelectorAll('video');
+
+videos.forEach(v=>{
+  if(v.id==='bgVideo') return;
+
+  const src=v.getAttribute('src') || '';
+  if(!src.trim()){
+    hideSectionForVideo(v);
+    return;
   }
 
-  // Hide only section videos if missing/broken
-  const videos = document.querySelectorAll('video');
-  videos.forEach(v => {
-    if (v.id === 'bgVideo') return;
+  v.addEventListener('error',()=>hideSectionForVideo(v));
+});
 
-    const src =
-      (v.getAttribute('src') || '') ||
-      (v.querySelector('source')?.getAttribute('src') || '');
-
-    if (!src.trim()) {
-      hideSectionForVideo(v);
-      return;
-    }
-
-    v.addEventListener('error', () => hideSectionForVideo(v));
-  });
 });
 </script>
 
